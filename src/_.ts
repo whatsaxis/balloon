@@ -5,10 +5,12 @@
 * alternative syntax
 */
 
+/* Node-specific types */
+
 type Tag = keyof HTMLElementTagNameMap
 
-type AT = string | number | boolean
-type Attribute = AT | AT[] | ((event: Event) => void)
+export type AT = string | number | boolean
+export type Attribute = AT | AT[] | ((event: Event) => void)
 
 type Attributes = {
     [attr: string]: Attribute
@@ -20,7 +22,10 @@ export interface Node {
     children: Child[]
 }
 
-type Child = Node | string
+/* Types including Nodes */
+
+export type Child = Node | string
+export type Fragment = Node[]
 
 /*
 * Base function for creating nodes
