@@ -61,15 +61,15 @@ describe('helpers.ts - Useful helper functions', () => {
         })
 
         test('can check for a valid nested interface', () => {
-            const intA: Interface = () => {
+            const A: Interface = () => {
                 return _('h1', {}, 'Hello! 1')
             }
 
-            const intB: Interface = () => {
-                return _('div', {}, 'Hello! 2', intA({}, null))
+            const B: Interface = () => {
+                return _('div', {}, 'Hello! 2', A({}, null))
             }
 
-            expect( isInterface(intB, {}, null) ).toEqual<Node>({
+            expect( isInterface(B, {}, null) ).toEqual<Node>({
                 type: 'div',
                 attributes: {},
                 children: [

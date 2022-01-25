@@ -10,7 +10,7 @@
 type Tag = keyof HTMLElementTagNameMap
 
 export type AT = string | number | boolean
-type Attribute = AT | AT[] | ((event: Event) => void)
+export type Attribute = AT | AT[] | ((event: Event) => void)
 
 type Attributes = {
     [attr: string]: Attribute
@@ -24,7 +24,7 @@ export interface Node {
 
 /* Types including Nodes */
 
-type Child = Node | string
+export type Child = Node | string
 export type Fragment = Node[]
 
 /*
