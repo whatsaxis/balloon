@@ -8,6 +8,7 @@ dist
 
 # Ignore logs
 logs
+coverage
 *.log
 
 # Ignore environment variables
