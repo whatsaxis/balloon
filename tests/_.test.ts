@@ -1,5 +1,11 @@
 import { _, Node } from '../src/_'
 
+/*
+* _()
+*
+* Basic Node creation function
+*/
+
 describe('_() - Node creation function', () => {
 
     test('should create a valid node', () => {

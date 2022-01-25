@@ -5,9 +5,11 @@
 * alternative syntax
 */
 
+/* Node-specific types */
+
 type Tag = keyof HTMLElementTagNameMap
 
-type AT = string | number | boolean
+export type AT = string | number | boolean
 type Attribute = AT | AT[] | ((event: Event) => void)
 
 type Attributes = {
@@ -20,7 +22,10 @@ export interface Node {
     children: Child[]
 }
 
+/* Types including Nodes */
+
 type Child = Node | string
+export type Fragment = Node[]
 
 /*
 * Base function for creating nodes
