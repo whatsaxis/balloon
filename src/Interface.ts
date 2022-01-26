@@ -1,5 +1,6 @@
 import { Node, AT } from './_'
 import { isNode } from './helpers'
+import { API } from './API'
 
 /*
 * Interface
@@ -9,23 +10,13 @@ import { isNode } from './helpers'
 * using an API.
 */
 
-// API Stub
-
-export interface API {
-    data: {
-        [key: string]: AT | AT[]
-    }    
-}
-
-
-
-type Props = { [prop: string]: AT }
+export type Props = { [prop: string]: AT }
 
 /* Interface Definition */
 
 export type Interface<
     P extends Props = { },
-    A extends API | null = null
+    A extends API<any> | null = null
 > =
     (
         props: P, api: A
@@ -38,7 +29,7 @@ export type Interface<
 
 export function isInterface<
     P extends Props = { },
-    A extends API | null = null
+    A extends API<any> | null = null
 >(
     thing: any,
     props: P,

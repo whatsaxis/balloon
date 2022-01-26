@@ -1,4 +1,6 @@
 import { Interface } from '../src/Interface'
+import { API } from '../src/API'
+
 import { Node, _ } from '../src/_'
 
 
@@ -88,6 +90,91 @@ describe('Interface - Basic UI structure', () => {
         
     })
 
-    /* TODO Tests with an API */
+    
+    test('can build a simple element with an API', () => {
+
+        /* Define API */
+        
+        class LanguageAPI extends API<{ language: 'Python' }> {
+            constructor() {
+                super({
+                    data: {
+                        language: 'Python'
+                    }
+                })
+            }
+        }
+
+        const api = new LanguageAPI()
+
+        /* Define Interface */
+
+        const SomeInterface: Interface<{}, LanguageAPI> = (props, api): Node => {
+            return _('code', {}, 'I love ' + api.data.language + '!')
+        }
+        
+        expect( SomeInterface({}, api) ).toEqual<Node>({
+            type: 'code',
+            attributes: {},
+            children: ['I love Python!']
+        })
+        
+    })
+
+    test('can build a multiple nested interfaces with APIs and props', () => {
+
+        /* Define API */
+        
+        class LanguageAPI extends API<{ language: 'Python' }> {
+            constructor() {
+                super({
+                    data: {
+                        language: 'Python'
+                    }
+                })
+            }
+        }
+
+        const api = new LanguageAPI()
+
+        /* Define Interfaces */
+        
+        const AnotherInterface: Interface<{ color: string }, LanguageAPI> = (props, api) => {
+            return _('div', {
+                'style': `color: ${ props.color }`
+            }, `${ api.data.language } on top!`)
+        }
+        
+        const SomeInterface: Interface<{ }, LanguageAPI> = (props, api): Node => {
+            return _('div', {}, 
+                _('code', {}, 'I love ' + api.data.language + '!'),
+                AnotherInterface({ color: 'red' }, api)
+            )
+        }
+        
+        expect( SomeInterface({ }, api) ).toEqual<Node>({
+            type: 'div',
+            attributes: {},
+            children: [
+                {
+                    type: 'code',
+                    attributes: {},
+                    children: [
+                        'I love Python!'
+                    ]
+                },
+                {
+                    type: 'div',
+                    attributes: {
+                        'style': 'color: red'
+                    },
+                    children: [
+                        'Python on top!'
+                    ]
+                }
+            ]
+        })
+        
+    })
 
 })
