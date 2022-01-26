@@ -3,6 +3,7 @@ import { isInterface, Interface } from '../src/Interface'
 
 import { Node, _ } from '../src/_'
 
+
 describe('helpers.ts - Useful helper functions', () => {
 
     /*
@@ -81,6 +82,14 @@ describe('helpers.ts - Useful helper functions', () => {
                     }
                 ]
             })
+        })
+
+        test('can check for a Node', () => {
+            expect( isInterface(_('div', {}, 'Hi Mom!'), {}, null) ).toBe(false)
+        })
+
+        test('can check for a non-valid item', () => {
+            expect( isInterface('Hi mom!', {}, null) ).toBe(false)
         })
     })
     

@@ -1,22 +1,47 @@
 import { _ } from '../src'
 import { Interface } from '../src/Interface'
 
-import { render } from '../src/render'
+import { mount } from '../src/dom'
+import { API } from '../src/API'
 
-const RandomNumberInterface: Interface = (props, api) => {
-    const randomNumber = Math.round(Math.random() * 100)
 
-    return _('h1', {
-        '@click': () => console.log('Hello!')
-    }, 'My random number is: ' + randomNumber)
+class CharCounterAPI extends API<{ chars: string }> {
+    constructor() {
+        super({
+            data: {
+                chars: ''
+            }
+        })
+    }
 }
 
-const MyInterface: Interface<{ number: number }, null> = (props, api) => {
-    return _('div', { }, 'Howdy! My number is ' + props.number, RandomNumberInterface({}, null))
-}
+const api = new CharCounterAPI()
 
-document.body.append(
-    render(
-        MyInterface({ number: 5 }, null)
+const ChatCounter: Interface<{ }, CharCounterAPI> = (props, api) => {
+    let color = ''
+
+    const len = api.data.chars.length
+
+    if (len > 10) color = 'green'
+    if (len > 30) color = 'blue'
+    if (len > 50) color = 'orange'
+    if (len > 75) color = 'pink'
+    if (len > 90) color = 'yellow'
+
+    return _(
+        'div', { },
+
+        _('textarea', {
+            '@input': (e) => {
+                api.data.chars = (e.target as HTMLInputElement).value
+            }
+        }),
+
+        _('h2', {}, 'Your text: ' + api.data.chars),
+        _('h3', {
+            style: 'color: ' + color
+        }, `Character count: ${ api.data.chars.length }/100`)
     )
-)
+}
+
+mount( ChatCounter, { }, api )
