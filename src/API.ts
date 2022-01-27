@@ -7,7 +7,7 @@ import { renderDOM } from './dom'
 * Data structures used for holding state that can be utilized inside an Interface.
 */
 
-type APIData = { [key: string]: AT | AT[] }
+export type APIData = { [key: string]: AT | AT[] }
 
 interface APIOptions<D extends APIData> {
     data: D

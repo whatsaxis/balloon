@@ -1,4 +1,4 @@
-import { Node, AT } from './_'
+import { Node } from './_'
 import { isNode } from './helpers'
 import { API } from './API'
 
@@ -10,7 +10,7 @@ import { API } from './API'
 * using an API.
 */
 
-export type Props = { [prop: string]: AT }
+export type Props = { [prop: string]: any }
 
 /* Interface Definition */
 

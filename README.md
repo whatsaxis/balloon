@@ -1,2 +1,2 @@
 # balloon
-A tiny, hyper-fast prototyping framework to make your projects fly! 🎈
+A tiny, hyper-fast, and extremely incomplete prototyping framework to make your projects fly! 🎈

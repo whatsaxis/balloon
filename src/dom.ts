@@ -1,6 +1,6 @@
 import { render } from './render'
 
-import { API } from './API'
+import { API, APIData } from './API'
 import { Interface, Props } from './Interface'
 
 import { Child, Node } from './_'
@@ -30,7 +30,7 @@ let app: BaseApp
 let dom: Node
 let prevDOM: Node
 
-export function mount(node: Interface<any, any>, props: Props, api: API<any>) {
+export function mount<P extends Props, A extends API<AP>, AP extends APIData>(node: Interface<P, A>, props: P, api: A) {
     /*
     * Initial Render - Prepare the DOM
     */
@@ -112,6 +112,8 @@ export function diff(domA: Child, domB: Child, elem: HTMLElement | Text) {
         const childB = B.children[ctr] ? B.children[ctr] : null
         const element = elem.childNodes.item(ctr) as HTMLElement | Text
         
+        /* Check if Nodes are equal, so as to not waste extra resources */
+
         if (isEqual(childA as Node, childB as Node)) continue
 
         if (element === null || childB === null) {
@@ -119,8 +121,12 @@ export function diff(domA: Child, domB: Child, elem: HTMLElement | Text) {
             continue
         }
 
+        /* Recursively call diff() with the children */
+
         diff(childA, childB, element)
     }
+
+    /* Remove any elements that are not meant to exist, for example after they got removed */
 
     for (let i = ctr + 1; i < elem.childNodes.length; i++) {
         elem.childNodes.item(i).remove()
