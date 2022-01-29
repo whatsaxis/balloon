@@ -12,7 +12,7 @@ type Tag = keyof HTMLElementTagNameMap
 export type AT = string | number | boolean
 export type Attribute = AT | AT[] | ((event: Event) => void)
 
-type Attributes = {
+export type Attributes = {
     [attr: string]: Attribute
 }
 
